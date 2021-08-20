@@ -2,5 +2,5 @@
 Simple Lexical Analyzer for a specific grammar.
 
 ## Tools:
--Python
--PyQt5
+- Python
+- PyQt5
