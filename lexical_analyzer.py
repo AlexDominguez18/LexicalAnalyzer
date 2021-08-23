@@ -41,22 +41,22 @@ class LexicalAnalyzer():
                         token = 'coma'
                         number = 3
                     elif text[i] == '(':
-                        self.__state = states.LEFT_PARENTHESIS
+                        self.__state = states.ESCAPE
                         lexeme += text[i]
                         token = 'parentesis izquierdo'
                         number = 4
                     elif text[i] == ')':
-                        self.__state = states.RIGHT_PARENTHESIS
+                        self.__state = states.ESCAPE
                         lexeme += text[i]
                         token = 'parentesis derecho'
                         number = 5
                     elif text[i] == '{':
-                        self.__state = states.LEFT_BRACKET
+                        self.__state = states.ESCAPE
                         lexeme += text[i]
                         token = 'llave izquierda'
                         number = 6
                     elif text[i] == '}':
-                        self.__state = states.RIGHT_BRACKET
+                        self.__state = states.ESCAPE
                         lexeme += text[i]
                         token = 'llave derecha'
                         number = 7
@@ -144,42 +144,6 @@ class LexicalAnalyzer():
                         self.__state = states.COMMA
                         lexeme += ','
                         token = 'coma'
-                        i += 1
-                    else:
-                        self.__state = states.ESCAPE
-                #State for (
-                elif self.__state == states.LEFT_PARENTHESIS:
-                    if text[i] == '(':
-                        self.__state = states.LEFT_PARENTHESIS
-                        lexeme += '('
-                        token = 'parentesis izquierdo'
-                        i += 1
-                    else:
-                        self.__state = states.ESCAPE
-                #State for )
-                elif self.__state == states.RIGHT_PARENTHESIS:
-                    if text[i] == ')':
-                        self.__state = states.RIGHT_PARENTHESIS
-                        lexeme += ')'
-                        token = 'parentesis derecho'
-                        i += 1
-                    else:
-                        self.__state = states.ESCAPE
-                #State for {
-                elif self.__state == states.LEFT_BRACKET:
-                    if text[i] == '{':
-                        self.__state = states.LEFT_BRACKET
-                        lexeme += '{'
-                        token = 'llave izquierda'
-                        i += 1
-                    else:
-                        self.__state = states.ESCAPE
-                #State for }
-                elif self.__state == states.RIGHT_BRACKET:
-                    if text[i] == '}':
-                        self.__state = states.RIGHT_BRACKET
-                        lexeme = '}'
-                        token = 'llave derecha'
                         i += 1
                     else:
                         self.__state = states.ESCAPE
