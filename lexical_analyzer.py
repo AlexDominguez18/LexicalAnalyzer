@@ -15,6 +15,7 @@ class LexicalAnalyzer():
             lexeme = ''
             token = 'Error'
             number = -1
+            self.__is_float = True
             while (i <= (len(text) - 1) and self.__state != states.ESCAPE):
                 #In the initial state
                 if self.__state == states.INITIAL:
@@ -40,6 +41,9 @@ class LexicalAnalyzer():
                         lexeme += text[i]
                         token = 'coma'
                         number = 3
+                    elif text[i] == '.':
+                        self.__state = states.DOT
+                        lexeme += text[i]
                     elif text[i] == '(':
                         self.__state = states.ESCAPE
                         lexeme += text[i]
@@ -112,11 +116,14 @@ class LexicalAnalyzer():
                         lexeme += text[i]
                         token = 'constante'
                         i += 1
-                    elif text[i] == '.' and self.__is_float == False:
+                    elif text[i] == '.' and not self.__is_float:
+                        self.__state = states.DOT
+                        self.__is_float = True
+                        i += 1
+                    elif text[i] == '.' and self.__is_float:
                         self.__state = states.DOT
                         lexeme += text[i]
-                        token = 'constante'
-                        self.__is_float = True
+                        self.__is_float = False
                         i += 1
                     else:
                         self.__state = states.ESCAPE
@@ -126,8 +133,11 @@ class LexicalAnalyzer():
                         self.__state = states.CONSTANT
                         lexeme += text[i]
                         token = 'constante'
+                        number = 13
                         i += 1
                     else:
+                        if not self.__is_float:
+                            i -= 1
                         self.__state = states.ESCAPE
                 #State for ;
                 elif self.__state == states.SEMICOLON:
